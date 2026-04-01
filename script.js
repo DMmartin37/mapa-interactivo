@@ -1,11 +1,12 @@
 var map = L.map('map').setView([-34.6037, -58.3816], 13);
-
+boton = document.getElementById("borrar");
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
    attribution: 'OpenStreetMap'
 }).addTo(map);
+var map_puntos = L.featureGroup().addTo(map);
 
 L.marker([-34.6037, -58.3816])
-   .addTo(map)
+   .addTo(map_puntos)
    .bindPopup("Ubicación inicial")
    .openPopup();
 
@@ -19,8 +20,15 @@ map.on('click', function(e) {
    puntos.push([e.latlng.lat, e.latlng.lng]);
 
    if (puntos.length === 3) {
-       L.polyline(puntos, { color: 'red' }, {fillColor: '#f03'}).addTo(map);
+       L.polyline(puntos, { color: 'red' }, {fillColor: '#f03'}).addTo(map_puntos);
        
    }
    
 });
+
+
+boton.onclick = function() {
+     puntos = [];
+   map_puntos.clearLayers();
+
+}
