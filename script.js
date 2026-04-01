@@ -5,7 +5,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 var map_puntos = L.featureGroup().addTo(map);
 
-L.marker([-34.6037, -58.3816])
+var icono = L.icon({
+    iconUrl: 'icono.png',
+
+    iconSize:     [40, 55], // size of the icon
+    shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+L.marker([-34.6037, -58.3816], {icon: icono})
    .addTo(map_puntos)
    .bindPopup("Ubicación inicial")
    .openPopup();
@@ -13,6 +23,8 @@ L.marker([-34.6037, -58.3816])
    map.on('click', function(e) {
    alert("Lat: " + e.latlng.lat + " Lng: " + e.latlng.lng);
 });
+
+
 
 let puntos = [];
 
