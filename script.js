@@ -18,7 +18,9 @@ let puntos = [];
 map.on('click', function(e) {
    puntos.push([e.latlng.lat, e.latlng.lng]);
 
-   if (puntos.length === 2) {
-       L.polyline(puntos, { color: 'blue' }).addTo(map);
+   if (puntos.length === 3) {
+       L.polyline(puntos, { color: 'red' }, {fillColor: '#f03'}).addTo(map);
+       
    }
+   
 });
