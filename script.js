@@ -44,3 +44,19 @@ boton.onclick = function() {
    map_puntos.clearLayers();
 
 }
+
+var Normal = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+});
+
+var Negro = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: 'abcd',
+	maxZoom: 20
+});
+
+var layerControl = L.control.layers({
+    "normal": Normal,
+    "Negro": Negro
+}).addTo(map);
