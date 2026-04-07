@@ -1,5 +1,6 @@
 var map = L.map('map').setView([-34.6037, -58.3816], 13);
 boton = document.getElementById("borrar");
+medir = document.getElementById("medir")
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
    attribution: 'OpenStreetMap'
 }).addTo(map);
@@ -27,15 +28,47 @@ L.marker([-34.6037, -58.3816], {icon: icono})
 
 
 let puntos = [];
+let modo_medicion = false;
+let distancia = [];
+
+medir.onclick = function(){
+modo_medicion = !modo_medicion;
+puntos_medicion = [];
+
+}
 
 map.on('click', function(e) {
-   puntos.push([e.latlng.lat, e.latlng.lng]);
 
-   if (puntos.length === 3) {
-       L.polyline(puntos, { color: 'red' }, {fillColor: '#f03'}).addTo(map_puntos);
-       
-   }
-   
+    if (modo_medicion) {
+        puntos_medicion.push(e.latlng);
+
+        L.marker(e.latlng).addTo(map_puntos);
+
+        if (puntos_medicion.length === 2) {
+            let linea = L.polyline(puntos_medicion, { color: 'blue' }).addTo(map_puntos);
+
+            let distancia = map.distance(puntos_medicion[0], puntos_medicion[1]);
+            let km = (distancia / 1000).toFixed(2);
+
+            let medio = linea.getBounds().getCenter();
+
+            L.popup()
+                .setLatLng(medio)
+                .setContent("Distancia: " + km + " km")
+                .openOn(map);
+
+            puntos_medicion = []; 
+            
+        }
+
+        return; 
+        
+    }
+        puntos.push([e.latlng.lat, e.latlng.lng]);
+
+    if (puntos.length === 3) {
+        L.polyline(puntos, { color: 'red' }).addTo(map_puntos);
+    }
 });
 
 
